@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Votre avis compte — Denis Deblevid</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --brun:#2C1A08;
+  --amber:#E8832A;
+  --dark:#C96A10;
+  --cream:#F5E6D0;
+  --light:#888888;
+  --white:#ffffff;
+}
+body{
+  font-family:'Montserrat',sans-serif;
+  background:radial-gradient(ellipse 150% 150% at 100% 0%,#ffffff 0%,#fff8d0 15%,#f5c030 35%,#e8832a 52%,#2a1f0a 85%,#1a1206 100%);
+  background-attachment:fixed;
+  min-height:100vh;
+  padding:60px 20px 80px;
+}
+.wrap{max-width:620px;margin:0 auto;}
+
+/* HEADER */
+.header{text-align:center;margin-bottom:48px;animation:fu .8s ease both;}
+.header h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,5vw,3.4rem);
+  font-weight:300;
+  color:var(--white);
+  text-shadow:0 2px 12px rgba(0,0,0,0.5);
+  line-height:1.2;
+  margin-bottom:12px;
+}
+.header h1 em{color:var(--amber);font-style:italic;}
+.header p{
+  color:rgba(255,255,255,0.8);
+  font-size:14px;
+  line-height:1.7;
+  max-width:460px;
+  margin:0 auto;
+}
+
+/* DATES */
+.dates{
+  text-align:center;
+  margin-bottom:32px;
+}
+.dates-inner{
+  display:inline-block;
+  background:rgba(44,26,8,0.7);
+  border:1px solid rgba(232,131,42,0.4);
+  padding:10px 24px;
+  border-radius:2px;
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--amber);
+}
+
+/* CARDS */
+.card{
+  background:rgba(255,255,255,0.88);
+  backdrop-filter:blur(16px);
+  border-radius:4px;
+  padding:36px 40px;
+  margin-bottom:20px;
+  box-shadow:0 8px 40px rgba(44,26,8,0.12);
+  animation:fu .8s ease both;
+}
+
+.card-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;
+  font-weight:400;
+  color:var(--brun);
+  margin-bottom:20px;
+  padding-bottom:12px;
+  border-bottom:2px solid var(--amber);
+}
+
+/* ÉTAPES */
+.etapes{display:flex;flex-direction:column;gap:14px;}
+.etape{display:flex;gap:16px;align-items:flex-start;}
+.etape-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;
+  color:var(--amber);
+  font-weight:300;
+  line-height:1;
+  min-width:28px;
+  margin-top:2px;
+}
+.etape-content{}
+.etape-title{
+  font-size:14px;
+  font-weight:500;
+  color:var(--brun);
+  margin-bottom:3px;
+}
+.etape-sub{font-size:13px;color:var(--light);line-height:1.5;}
+.etape-link{
+  display:inline-block;
+  margin-top:4px;
+  font-size:12px;
+  color:var(--amber);
+  text-decoration:none;
+  letter-spacing:1px;
+}
+.etape-link:hover{color:var(--dark);}
+
+/* LOTS */
+.lots{display:flex;flex-direction:column;gap:12px;}
+.lot{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:14px 16px;
+  background:rgba(232,131,42,0.06);
+  border-left:3px solid var(--amber);
+  border-radius:0 2px 2px 0;
+}
+.lot-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem;
+  color:var(--amber);
+  font-weight:300;
+  line-height:1;
+  min-width:40px;
+  text-align:center;
+}
+.lot-num span{display:block;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--light);font-family:'Montserrat',sans-serif;}
+.lot-text{font-size:14px;color:var(--brun);line-height:1.5;}
+.lot-text strong{color:var(--dark);font-weight:500;}
+
+/* PARTICIPER */
+.participer{
+  background:var(--brun);
+  border-radius:4px;
+  padding:32px 40px;
+  margin-bottom:20px;
+  animation:fu .8s ease both;
+}
+.participer h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;
+  color:var(--amber);
+  margin-bottom:20px;
+}
+.participer-steps{display:flex;flex-direction:column;gap:12px;}
+.participer-step{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  font-size:13px;
+  color:rgba(255,255,255,0.8);
+  line-height:1.6;
+}
+.participer-step::before{
+  content:'→';
+  color:var(--amber);
+  flex-shrink:0;
+  margin-top:1px;
+}
+
+/* CTA */
+.cta-wrap{text-align:center;margin-bottom:20px;}
+.cta-btn{
+  display:inline-block;
+  padding:16px 40px;
+  background:var(--amber);
+  color:white;
+  font-family:'Montserrat',sans-serif;
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  text-decoration:none;
+  border-radius:2px;
+  transition:all .3s;
+}
+.cta-btn:hover{background:var(--dark);transform:translateY(-2px);}
+
+/* MENTION */
+.mention{
+  text-align:center;
+  font-size:11px;
+  color:rgba(255,255,255,0.4);
+  margin-bottom:24px;
+}
+
+/* DEVISE */
+.devise{
+  text-align:center;
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  color:var(--amber);
+  font-size:16px;
+}
+
+@keyframes fu{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <h1>Votre avis<br><em>compte.</em></h1>
+    <p>Vous faites partie des premiers. Votre retour honnête m'est précieux — et il peut vous valoir quelque chose.</p>
+  </div>
+
+  <div class="dates">
+    <div class="dates-inner">Du 5 mai au 1er juin 2026</div>
+  </div>
+
+  <!-- ÉTAPES -->
+  <div class="card">
+    <div class="card-title">Ce que je vous propose</div>
+    <div class="etapes">
+      <div class="etape">
+        <div class="etape-num">1</div>
+        <div class="etape-content">
+          <div class="etape-title">Visitez le site</div>
+          <div class="etape-sub">Prenez le temps de le parcourir — le guide, le diagnostic, la méthode.</div>
+          <a href="https://renaitredelasoif.fr" target="_blank" class="etape-link">renaitredelasoif.fr →</a>
+        </div>
+      </div>
+      <div class="etape">
+        <div class="etape-num">2</div>
+        <div class="etape-content">
+          <div class="etape-title">Téléchargez le guide gratuit</div>
+          <div class="etape-sub">Un guide de transformation intérieure — sans engagement.</div>
+        </div>
+      </div>
+      <div class="etape">
+        <div class="etape-num">3</div>
+        <div class="etape-content">
+          <div class="etape-title">Faites le diagnostic</div>
+          <div class="etape-sub">30 questions, 10 minutes — 4 piliers, 6 domaines de vie.</div>
+          <a href="https://denisdeblevid.github.io/mon-cv/questionnaire-particuliers.html" target="_blank" class="etape-link">Faire le diagnostic →</a>
+        </div>
+      </div>
+      <div class="etape">
+        <div class="etape-num">4</div>
+        <div class="etape-content">
+          <div class="etape-title">Remplissez l'enquête de satisfaction</div>
+          <div class="etape-sub">Votre retour honnête — pas de la politesse, de la vérité.</div>
+          <a href="https://denisdeblevid.github.io/mon-cv/feedback-panel.html" target="_blank" class="etape-link">Accéder à l'enquête →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOTS -->
+  <div class="card">
+    <div class="card-title">Ce que vous pouvez gagner</div>
+    <div class="lots">
+      <div class="lot">
+        <div class="lot-num">12<span>ème</span></div>
+        <div class="lot-text"><strong>Forfait 3 séances en visio</strong><br>Un accompagnement complet — Méthode des 4P.</div>
+      </div>
+      <div class="lot">
+        <div class="lot-num">24<span>ème</span></div>
+        <div class="lot-text"><strong>1 séance de 45 minutes en visio</strong><br>Une conversation qui peut changer quelque chose.</div>
+      </div>
+      <div class="lot">
+        <div class="lot-num">30<span>ème</span></div>
+        <div class="lot-text"><strong>1 séance de 45 minutes en visio</strong></div>
+      </div>
+      <div class="lot">
+        <div class="lot-num">33<span>ème</span></div>
+        <div class="lot-text"><strong>1 séance de 45 minutes en visio</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARTICIPER -->
+  <div class="participer">
+    <h3>Pour participer au tirage</h3>
+    <div class="participer-steps">
+      <div class="participer-step">Dans le champ message libre de l'enquête écrivez <strong style="color:var(--amber);">"Je veux participer"</strong> avec vos disponibilités pour une séance visio.</div>
+      <div class="participer-step"><strong style="color:var(--amber);">Participation entièrement gratuite et sans obligation d'achat.</strong></div>
+      <div class="participer-step">En commentaire de la publication Facebook — taguez 5 personnes.</div>
+      <div class="participer-step">Écrivez en commentaire : <strong style="color:var(--amber);">"Je veux avancer."</strong></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-wrap">
+    <a href="https://denisdeblevid.github.io/mon-cv/feedback-panel.html" class="cta-btn">Participer à l'enquête →</a>
+  </div>
+
+  <div class="mention">Ce jeu n'est pas sponsorisé par Facebook.</div>
+
+  <div class="devise">« Ἀρκεῖ — Προκόπτω »<br><span style="font-size:13px;color:rgba(255,255,255,0.5);">C'est suffisant — J'avance.</span></div>
+
+
+  <!-- RÈGLEMENT -->
+  <div class="card" style="margin-top:20px;">
+    <div class="card-title">Règlement du jeu-concours</div>
+    <div style="font-size:13px;color:#444;line-height:1.8;">
+      <p><strong>Article 1 — Organisateur</strong><br>
+      Ce jeu-concours est organisé par Denis Deblevid, accompagnateur philosophique et coach, basé à Marseille (13012). Contact : denisdeblevidcontact@gmail.com</p>
+      <br>
+      <p><strong>Article 2 — Durée</strong><br>
+      Du 5 mai 2026 à 00h00 au 1er juin 2026 à 23h59.</p>
+      <br>
+      <p><strong>Article 3 — Participation</strong><br>
+      Participation entièrement gratuite et sans obligation d'achat. Ouverte à toute personne majeure résidant en France métropolitaine. Une seule participation par personne.</p>
+      <br>
+      <p><strong>Article 4 — Conditions de participation</strong><br>
+      Pour participer, le participant doit :<br>
+      — Visiter le site renaitredelasoif.fr<br>
+      — Remplir l'enquête de satisfaction<br>
+      — Écrire "Je veux participer" avec ses disponibilités dans le champ message libre<br>
+      — Taguer 5 personnes en commentaire de la publication Facebook<br>
+      — Écrire "Je veux avancer" en commentaire</p>
+      <br>
+      <p><strong>Article 5 — Désignation des gagnants</strong><br>
+      Les gagnants seront désignés par ordre de réception des réponses complètes à l'enquête :<br>
+      — 12ème participant : forfait 3 séances en visio<br>
+      — 24ème participant : 1 séance de 45 minutes en visio<br>
+      — 30ème participant : 1 séance de 45 minutes en visio<br>
+      — 33ème participant : 1 séance de 45 minutes en visio</p>
+      <br>
+      <p><strong>Article 6 — Notification des gagnants</strong><br>
+      Les gagnants seront contactés par email dans un délai de 7 jours suivant la clôture du jeu, soit au plus tard le 8 juin 2026. Sans réponse dans les 15 jours, le lot sera attribué au participant suivant.</p>
+      <br>
+      <p><strong>Article 7 — Lots</strong><br>
+      Les lots sont des séances d'accompagnement en visio avec Denis Deblevid. Ils ne sont ni échangeables ni remboursables. Ils sont à utiliser dans les 3 mois suivant la notification.</p>
+      <br>
+      <p><strong>Article 8 — Données personnelles</strong><br>
+      Les données collectées sont utilisées uniquement dans le cadre de ce jeu-concours et de l'amélioration des services de Denis Deblevid. Elles ne seront pas transmises à des tiers. Conformément au RGPD, vous disposez d'un droit d'accès et de suppression en écrivant à denisdeblevidcontact@gmail.com</p>
+      <br>
+      <p><strong>Article 9 — Responsabilité</strong><br>
+      Ce jeu-concours n'est pas sponsorisé, cautionné ni administré par Facebook. Les participants reconnaissent que Facebook est dégagé de toute responsabilité.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
