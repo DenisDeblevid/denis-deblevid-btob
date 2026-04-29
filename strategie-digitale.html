@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stratégie Digitale — Denis Deblevid</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
+:root{
+  --gold:#c5a059;
+  --gold-light:#d4b97a;
+  --gold-dim:rgba(197,160,89,0.15);
+  --black:#080808;
+  --dark:#111111;
+  --white:#ffffff;
+  --gray:#888888;
+  --soft:#cccccc;
+}
+body{
+  font-family:'Outfit',sans-serif;
+  background:var(--black);
+  color:var(--white);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* CURSOR */
+.cursor{width:8px;height:8px;background:var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transition:transform .15s ease;}
+.cursor-ring{width:32px;height:32px;border:1.5px solid var(--gold);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.7;}
+
+/* HEADER */
+header{
+  padding:80px 60px 60px;
+  border-bottom:1px solid rgba(197,160,89,0.12);
+  position:relative;
+  overflow:hidden;
+}
+header::before{
+  content:'';
+  position:absolute;
+  top:-100px;right:-100px;
+  width:500px;height:500px;
+  background:radial-gradient(circle,rgba(197,160,89,0.04) 0%,transparent 70%);
+  pointer-events:none;
+}
+.header-tag{
+  font-size:.65rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);border:1px solid rgba(197,160,89,0.3);
+  padding:5px 14px;display:inline-block;margin-bottom:24px;
+}
+header h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.5rem,5vw,4.5rem);
+  font-weight:300;line-height:1.1;
+  color:var(--white);margin-bottom:16px;
+}
+header h1 span{color:var(--gold);font-style:italic;}
+.header-sub{
+  font-size:.85rem;color:var(--gray);
+  line-height:1.8;max-width:560px;
+}
+.header-note{
+  margin-top:20px;padding:12px 20px;
+  border-left:2px solid rgba(197,160,89,0.4);
+  font-size:.78rem;color:var(--gray);font-style:italic;
+}
+
+/* NAVIGATION ÉTAPES */
+.nav-steps{
+  display:flex;flex-wrap:wrap;gap:0;
+  border-bottom:1px solid rgba(197,160,89,0.12);
+  padding:0 60px;
+  overflow-x:auto;
+}
+.step-btn{
+  padding:18px 24px;
+  font-family:'Outfit',sans-serif;
+  font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--gray);background:transparent;border:none;
+  cursor:pointer;border-bottom:2px solid transparent;
+  transition:all .3s;white-space:nowrap;
+  display:flex;align-items:center;gap:10px;
+}
+.step-btn:hover{color:var(--gold);}
+.step-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+.step-num{
+  width:22px;height:22px;border-radius:50%;
+  border:1px solid currentColor;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:600;flex-shrink:0;
+}
+
+/* CONTENU */
+.content{padding:0 60px;min-height:60vh;}
+.step-panel{display:none;animation:fadeIn .5s ease both;}
+.step-panel.active{display:block;}
+
+.step-inner{
+  display:grid;grid-template-columns:1fr 1.2fr;
+  gap:60px;align-items:start;
+  padding:60px 0;
+  border-bottom:1px solid rgba(197,160,89,0.08);
+}
+
+.step-left{}
+.step-eyebrow{
+  font-size:.6rem;letter-spacing:4px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;
+}
+.step-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2rem,3vw,3rem);
+  font-weight:300;color:var(--white);
+  line-height:1.1;margin-bottom:20px;
+}
+.step-title em{color:var(--gold);font-style:italic;}
+.step-desc{
+  font-size:.88rem;color:var(--gray);
+  line-height:1.9;margin-bottom:28px;
+}
+
+/* TYPEWRITER */
+.typewriter-wrap{
+  background:var(--dark);
+  border:1px solid rgba(197,160,89,0.15);
+  padding:28px 32px;
+  position:relative;
+}
+.typewriter-wrap::before{
+  content:'';position:absolute;top:0;left:0;
+  width:100%;height:2px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+}
+.typewriter-label{
+  font-size:.6rem;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(197,160,89,0.5);margin-bottom:16px;
+}
+.typewriter-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-style:italic;
+  color:var(--soft);line-height:1.8;min-height:80px;
+}
+.cursor-blink{
+  display:inline-block;width:2px;height:1.1em;
+  background:var(--gold);margin-left:2px;vertical-align:middle;
+  animation:blink .7s infinite;
+}
+
+/* ACTIONS LIST */
+.actions-list{display:flex;flex-direction:column;gap:14px;}
+.action-item{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:16px 20px;
+  border:1px solid rgba(197,160,89,0.08);
+  transition:all .3s;cursor:default;
+}
+.action-item:hover{
+  border-color:rgba(197,160,89,0.25);
+  background:rgba(197,160,89,0.04);
+}
+.action-icon{
+  font-size:1.1rem;color:var(--gold);
+  min-width:24px;margin-top:2px;
+}
+.action-text{font-size:.83rem;color:var(--gray);line-height:1.7;}
+.action-text strong{color:var(--soft);font-weight:500;}
+
+/* FOOTER */
+footer{
+  padding:40px 60px;
+  border-top:1px solid rgba(197,160,89,0.12);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.footer-motto{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;font-style:italic;color:var(--gold);
+}
+.footer-note{font-size:.7rem;color:rgba(255,255,255,0.2);letter-spacing:1px;}
+
+/* PROGRESS BAR */
+.progress-bar{
+  height:2px;background:rgba(197,160,89,0.1);
+  position:fixed;top:0;left:0;right:0;z-index:100;
+}
+.progress-fill{
+  height:100%;background:var(--gold);
+  transition:width .4s ease;
+}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+@media(max-width:900px){
+  header,.nav-steps,.content,footer{padding-left:24px;padding-right:24px;}
+  .step-inner{grid-template-columns:1fr;gap:32px;}
+  *{cursor:auto!important;}
+  .cursor,.cursor-ring{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<header>
+  <div class="header-tag">Stratégie Digitale · Retour d'expérience 2026</div>
+  <h1>Construire sa présence<br>et <span>convertir</span></h1>
+  <p class="header-sub">Un parcours en 7 étapes pour passer de zéro à une infrastructure digitale opérationnelle — testée et documentée en conditions réelles.</p>
+  <div class="header-note">Note : Cette stratégie est issue d'une expérience en cours. Elle est partagée comme point de départ et outil de réflexion, pas comme méthodologie définitivement validée.</div>
+</header>
+
+<nav class="nav-steps" id="nav">
+  <button class="step-btn active" onclick="showStep(0)"><span class="step-num">0</span>Fondations</button>
+  <button class="step-btn" onclick="showStep(1)"><span class="step-num">1</span>Présence</button>
+  <button class="step-btn" onclick="showStep(2)"><span class="step-num">2</span>Tunnel</button>
+  <button class="step-btn" onclick="showStep(3)"><span class="step-num">3</span>Contenu</button>
+  <button class="step-btn" onclick="showStep(4)"><span class="step-num">4</span>Réseau</button>
+  <button class="step-btn" onclick="showStep(5)"><span class="step-num">5</span>Publicité</button>
+  <button class="step-btn" onclick="showStep(6)"><span class="step-num">6</span>Outils</button>
+</nav>
+
+<div class="content">
+
+  <!-- ÉTAPE 0 -->
+  <div class="step-panel active" id="panel-0">
+    <div class="step-inner">
+      <div class="step-left">
+        <div class="step-eyebrow">Étape 0 — Avant tout</div>
+        <h2 class="step-title">Les <em>fondations</em></h2>
+        <p class="step-desc">Avant de créer quoi que ce soit, il faut savoir qui vous êtes, ce que vous offrez, et à qui. Sans cette clarté, tout le reste est du bruit.</p>
+        <div class="typewriter-wrap">
+          <div class="typewriter-label">Ce que vous devez pouvoir dire</div>
+          <div class="typewriter-text" id="tw-0"></div>
+        </div>
+      </div>
+      <div class="step-left">
+        <div class="actions-list">
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Définir votre méthode</strong> — Qu'est-ce qui vous différencie ? Quelle est votre approche unique ? Donnez-lui un nom.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Identifier votre cible</strong> — Particuliers, professionnels, ou les deux ? Quel problème résolvez-vous pour eux ?</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Trouver votre devise</strong> — Une phrase ou un concept qui résume votre philosophie et crée un sentiment d'appartenance.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Protéger votre création</strong> — Dépôt e-Soleau INPI. 15€. Preuve d'antériorité irréfutable.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 1 -->
+  <div class="step-panel" id="panel-1">
+    <div class="step-inner">
+      <div class="step-left">
+        <div class="step-eyebrow">Étape 1 — Visibilité</div>
+        <h2 class="step-title">La présence<br><em>en ligne</em></h2>
+        <p class="step-desc">Votre vitrine digitale. Deux sites si vous avez deux cibles — particuliers et professionnels. Un nom de domaine propre est la première marque de sérieux.</p>
+        <div class="typewriter-wrap">
+          <div class="typewriter-label">L'objectif</div>
+          <div class="typewriter-text" id="tw-1"></div>
+        </div>
+      </div>
+      <div class="step-left">
+        <div class="actions-list">
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Site BtoC</strong> — Guide gratuit, diagnostic, prise de contact. Ton chaleureux et personnel.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Site BtoB</strong> — Positionnement, axes d'intervention, prise de RDV directe. Ton sobre et professionnel.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Nom de domaine propre</strong> — Évitez les sous-domaines. Un .fr ou .com à votre nom coûte moins de 10€/an.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Cohérence visuelle</strong> — Palette, typographie, ton. Un visiteur doit reconnaître votre univers en 3 secondes.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 2 -->
+  <div class="step-panel" id="panel-2">
+    <div class="step-inner">
+      <div class="step-left">
+        <div class="step-eyebrow">Étape 2 — Conversion</div>
+        <h2 class="step-title">Le tunnel<br><em>de conversion</em></h2>
+        <p class="step-desc">Un visiteur ne devient pas client par hasard. Il faut un chemin clair, progressif, qui crée de la confiance avant de demander quoi que ce soit.</p>
+        <div class="typewriter-wrap">
+          <div class="typewriter-label">Le principe</div>
+          <div class="typewriter-text" id="tw-2"></div>
+        </div>
+      </div>
+      <div class="step-left">
+        <div class="actions-list">
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Ressource gratuite</strong> — Guide, checklist, mini-formation. En échange d'un email. C'est le premier acte de confiance.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Séquence email automatisée</strong> — 3 à 7 emails sur 21 jours. Valeur, exercices, progression naturelle vers l'offre.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Outil de diagnostic</strong> — Gratuit, en ligne, résultat immédiat. Crée de l'engagement et prépare le premier entretien.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Premier échange offert</strong> — 30 minutes, sans engagement. Le blocage naturel qui convertit les curieux en clients.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 3 -->
+  <div class="step-panel" id="panel-3">
+    <div class="step-inner">
+      <div class="step-left">
+        <div class="step-eyebrow">Étape 3 — Autorité</div>
+        <h2 class="step-title">Le contenu<br><em>régulier</em></h2>
+        <p class="step-desc">Publier régulièrement construit votre autorité dans le temps. Ce n'est pas une question de volume — c'est une question de constance et de cohérence.</p>
+        <div class="typewriter-wrap">
+          <div class="typewriter-label">La règle</div>
+          <div class="typewriter-text" id="tw-3"></div>
+        </div>
+      </div>
+      <div class="step-left">
+        <div class="actions-list">
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Une publication hebdomadaire minimum</strong> — LinkedIn, Facebook, ou les deux selon votre cible. La régularité prime sur la perfection.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Format citation</strong> — Court, identitaire, facile à partager. Ancre votre univers philosophique ou thématique.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Format fil rouge</strong> — Un sujet découpé en 4 semaines. Crée l'habitude de lecture et l'anticipation.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Visuels cohérents</strong> — Palette, polices, style identiques. Votre audience doit vous reconnaître avant de lire.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 4 -->
+  <div class="step-panel" id="panel-4">
+    <div class="step-inner">
+      <div class="step-left">
+        <div class="step-eyebrow">Étape 4 — Engagement</div>
+        <h2 class="step-title">Activer<br><em>le réseau</em></h2>
+        <p class="step-desc">Votre réseau existant est votre premier actif. Il ne demande pas d'être converti — il demande à être activé. Un geste honnête suffit souvent.</p>
+        <div class="typewriter-wrap">
+          <div class="typewriter-label">L'insight</div>
+          <div class="typewriter-text" id="tw-4"></div>
+        </div>
+      </div>
+      <div class="step-left">
+        <div class="actions-list">
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Jeu-concours avec lots cohérents</strong> — Les lots doivent être directement liés à votre offre. Vous attirez les bonnes personnes.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Enquête de satisfaction</strong> — Demandez des retours honnêtes. Pas de la politesse. C'est de l'or pour améliorer votre offre.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Invitation au partage</strong> — Taguez 5 personnes, partagez à un ami. Le bouche-à-oreille reste le canal de conversion le plus puissant.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Panel de test restreint</strong> — Choisissez 20 à 30 personnes de confiance. Leur retour vaut plus que 1000 inconnus.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 5 -->
+  <div class="step-panel" id="panel-5">
+    <div class="step-inner">
+      <div class="step-left">
+        <div class="step-eyebrow">Étape 5 — Amplification</div>
+        <h2 class="step-title">La publicité<br><em>payante</em></h2>
+        <p class="step-desc">La publicité payante amplifie ce qui fonctionne déjà — elle ne répare pas ce qui ne fonctionne pas. Testez petit avant d'investir.</p>
+        <div class="typewriter-wrap">
+          <div class="typewriter-label">La règle d'or</div>
+          <div class="typewriter-text" id="tw-5"></div>
+        </div>
+      </div>
+      <div class="step-left">
+        <div class="actions-list">
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Budget test limité</strong> — 30 à 50€ pour tester. Mesurez avant d'investir davantage.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Une seule action par publicité</strong> — Un message, un lien, un objectif. La complexité tue la conversion.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Cibler par intérêt</strong> — Facebook et Instagram permettent de cibler précisément. Utilisez-le pour toucher les bonnes personnes.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Analyser les statistiques</strong> — Vues, clics, réactions. Les données ne mentent pas. Ajustez en conséquence.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 6 -->
+  <div class="step-panel" id="panel-6">
+    <div class="step-inner">
+      <div class="step-left">
+        <div class="step-eyebrow">Étape 6 — Professionnalisation</div>
+        <h2 class="step-title">Les outils<br><em>interactifs</em></h2>
+        <p class="step-desc">Les outils interactifs transforment un visiteur passif en participant actif. Ils collectent de l'information, créent de l'engagement, et préparent la relation.</p>
+        <div class="typewriter-wrap">
+          <div class="typewriter-label">Le principe</div>
+          <div class="typewriter-text" id="tw-6"></div>
+        </div>
+      </div>
+      <div class="step-left">
+        <div class="actions-list">
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Quiz ou diagnostic en ligne</strong> — Résultat immédiat. Le visiteur apprend quelque chose sur lui-même et vous sur lui.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Formulaire de bilan client</strong> — Avant la séance. Gagne du temps, montre le sérieux, prépare l'entretien.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Page de jeu ou d'engagement</strong> — Croyances limitantes, facteur limitant. L'interactivité crée une expérience mémorable.</div></div>
+          <div class="action-item"><div class="action-icon">◆</div><div class="action-text"><strong>Automatisation progressive</strong> — EmailJS, Brevo. Chaque outil gagné est du temps libéré pour l'essentiel — vos clients.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-motto">Arkeï — Prokoptô</div>
+  <div class="footer-note">Denis Deblevid · Coaching — Philosophie & Sens · Marseille · denis-deblevid.fr</div>
+</footer>
+
+<script>
+const texts = [
+  "Je suis [prénom], je propose [offre] à [cible]. Ce qui me différencie, c'est [méthode]. Ma devise : [devise].",
+  "Quand quelqu'un cherche ce que vous faites, il doit vous trouver. Et quand il vous trouve, il doit comprendre en 10 secondes pourquoi vous et pas un autre.",
+  "Donnez d'abord. Créez de la confiance. Proposez ensuite. Le visiteur doit sentir qu'il reçoit quelque chose de valeur avant de débourser quoi que ce soit.",
+  "Mieux vaut publier quelque chose d'imparfait régulièrement que quelque chose de parfait une fois par trimestre. La constance construit la crédibilité.",
+  "Vos proches ne sont pas des prospects — ce sont des ambassadeurs potentiels. Traitez-les comme tels : avec honnêteté, sans pression.",
+  "Ne payez jamais pour diffuser un message qui ne fonctionne pas déjà gratuitement. La publicité amplifie — elle ne crée pas.",
+  "Un outil bien conçu travaille pour vous 24 heures sur 24. Investissez du temps à le construire une fois — récoltez les fruits indéfiniment."
+];
+
+let currentStep = 0;
+let twInterval = null;
+
+function typewrite(id, text, speed) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.innerHTML = '';
+  let i = 0;
+  clearInterval(twInterval);
+  twInterval = setInterval(function() {
+    if (i < text.length) {
+      el.innerHTML = text.substring(0, i+1) + '<span class="cursor-blink"></span>';
+      i++;
+    } else {
+      el.innerHTML = text + '<span class="cursor-blink"></span>';
+      clearInterval(twInterval);
+    }
+  }, speed || 35);
+}
+
+function showStep(n) {
+  // Update buttons
+  document.querySelectorAll('.step-btn').forEach(function(btn, i) {
+    btn.classList.toggle('active', i === n);
+  });
+  // Update panels
+  document.querySelectorAll('.step-panel').forEach(function(panel, i) {
+    panel.classList.toggle('active', i === n);
+  });
+  // Update progress
+  var pct = Math.round((n / 6) * 100);
+  document.getElementById('progress').style.width = pct + '%';
+  // Typewrite
+  currentStep = n;
+  setTimeout(function() {
+    typewrite('tw-' + n, texts[n], 30);
+  }, 300);
+}
+
+// Cursor
+var cursor = document.getElementById('cursor');
+var ring = document.getElementById('cursorRing');
+var mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', function(e) {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = (mx-4) + 'px';
+  cursor.style.top = (my-4) + 'px';
+});
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+// Init
+showStep(0);
+</script>
+</body>
+</html>
