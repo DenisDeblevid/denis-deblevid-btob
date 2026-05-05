@@ -318,7 +318,18 @@
             * { cursor: auto; }
             .cursor, .cursor-ring { display: none; }
         }
-    </style>
+    @media(max-width:480px){
+  .methode-grid{grid-template-columns:1fr;}
+  .hero-contacts{flex-direction:column;align-items:flex-start;gap:10px;}
+  .calendar-wrap iframe{height:420px;}
+  .form-row{grid-template-columns:1fr;}
+  .rgpd-banner{padding:14px 16px;}
+  .section-header{gap:10px;}
+  .section-num{font-size:2rem;}
+  .section-title{font-size:1.6rem;}
+  .hero-btns{flex-direction:column;width:100%;}
+  .hero-btn,.hero-btn-sec{width:100%;justify-content:center;}
+}</style>
 </head>
 <body>
 
